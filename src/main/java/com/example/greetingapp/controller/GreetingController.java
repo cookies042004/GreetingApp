@@ -1,6 +1,5 @@
 package com.example.greetingapp.controller;
 
-import java.util.List;
 
 import com.example.greetingapp.model.GreetingModel;
 import com.example.greetingapp.service.GreetingService;
@@ -17,8 +16,8 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping("/all")
-    public List<GreetingModel> getAllGreetings() {
-        return greetingService.getAllGreetings();
+    @PutMapping("/{id}")
+    public GreetingModel updateGreeting(@PathVariable Long id, @RequestBody String message) {
+        return greetingService.updateGreeting(id, message);
     }
 }
