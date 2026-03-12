@@ -1,23 +1,37 @@
 package com.example.greetingapp.service;
 
+import com.example.greetingapp.model.GreetingModel;
+import com.example.greetingapp.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GreetingService {
-    public String getGreetingMessage(String firstName, String lastName) {
+
+    private final GreetingRepository greetingRepository;
+
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
+
+    public GreetingModel saveGreeting(String firstName, String lastName) {
+
+        String message;
 
         if (firstName != null && lastName != null) {
-            return "Hello " + firstName + " " + lastName;
+            message = "Hello " + firstName + " " + lastName;
+        } 
+        else if (firstName != null) {
+            message = "Hello " + firstName;
+        } 
+        else if (lastName != null) {
+            message = "Hello " + lastName;
+        } 
+        else {
+            message = "Hello World";
         }
 
-        if (firstName != null) {
-            return "Hello " + firstName;
-        }
+        GreetingModel greeting = new GreetingModel(message);
 
-        if (lastName != null) {
-            return "Hello " + lastName;
-        }
-
-        return "Hello World";
+        return greetingRepository.save(greeting);
     }
 }
