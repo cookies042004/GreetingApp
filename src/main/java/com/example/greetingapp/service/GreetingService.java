@@ -1,6 +1,6 @@
 package com.example.greetingapp.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.example.greetingapp.model.GreetingModel;
 import com.example.greetingapp.repository.GreetingRepository;
@@ -17,7 +17,15 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
-    public List<GreetingModel> getAllGreetings() {
-        return greetingRepository.findAll();
+    public GreetingModel updateGreeting(Long id, String message){
+        Optional<GreetingModel> optionalGreeting = greetingRepository.findById(id);
+        
+        if(optionalGreeting.isPresent()){
+            GreetingModel greeting = optionalGreeting.get();
+            greeting.setMessage(message);
+            return greetingRepository.save(greeting);
+        } else {
+            throw new RuntimeException("Greeting not found with id: " + id);
+        }
     }
 }
