@@ -1,8 +1,5 @@
 package com.example.greetingapp.service;
 
-import java.util.Optional;
-
-import com.example.greetingapp.model.GreetingModel;
 import com.example.greetingapp.repository.GreetingRepository;
 
 import org.springframework.stereotype.Service;
@@ -17,13 +14,11 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
-    public GreetingModel updateGreeting(Long id, String message){
-        Optional<GreetingModel> optionalGreeting = greetingRepository.findById(id);
-        
-        if(optionalGreeting.isPresent()){
-            GreetingModel greeting = optionalGreeting.get();
-            greeting.setMessage(message);
-            return greetingRepository.save(greeting);
+    public String deleteGreeting(Long id) {
+
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return "Greeting deleted successfully";
         } else {
             throw new RuntimeException("Greeting not found with id: " + id);
         }

@@ -1,7 +1,5 @@
 package com.example.greetingapp.controller;
 
-
-import com.example.greetingapp.model.GreetingModel;
 import com.example.greetingapp.service.GreetingService;
 
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +14,8 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @PutMapping("/{id}")
-    public GreetingModel updateGreeting(@PathVariable Long id, @RequestBody String message) {
-        return greetingService.updateGreeting(id, message);
+    @DeleteMapping("/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        return greetingService.deleteGreeting(id);
     }
 }
